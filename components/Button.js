@@ -24,6 +24,8 @@ class Button {
         var b = map(this.counter, 0, 255, 150, 200)
         var alpha = map(this.counter, 0, 255, 150, 255)
         this.color = color(r, g, b, alpha)
+        fill(this.color)
+        strokeWeight(0)
 
         // Translate the position to draw the shape
         translate(0, this.buttonHeight)
