@@ -1,30 +1,95 @@
-var requiem = [];
+var song, songLen;
+var amp, vol, mag;
+var playBtn;
+var vlmSlider, sngSlider;
+var vlmSliderLabel, sngSliderLabel;
+var songButton;
+var hasLoaded = false;
 
 function setup() {
-    createCanvas(windowWidth, windowHeight);
-    background(244,32,122,110)
-    requiem = [ 
-        loadSound('static/01-Introitus.mp3'), 
-        loadSound('static/02-Kyrie.mp3')
-    ]
+    createCanvas(windowWidth, windowHeight, WEBGL);
+
+    song = loadSound('static/01-Introitus.mp3', contentLoaded)
+    amp = new p5.Amplitude();
+
+    vlmSlider = createSlider(0, 1, 0.5, 0.01)
+    vlmSlider.id('vlmSlider')
 }
 
-function windowResized() {
-    resizeCanvas(windowWidth, windowHeight);
+function contentLoaded() {
+    songLen = song.duration()
+
+    sngSlider = createSlider(0, songLen, 0, 0.01)
+    sngSlider.id('sngSlider')
+    sngSlider.mouseClicked(jumpSlide)
+
+    playBtn = createButton('Play')
+    playBtn.position(20,50)
+    playBtn.mouseClicked(playSong)
+
+    vlmSliderLabel = createElement('label', 'Volume')
+    vlmSliderLabel.attribute('for', 'vlmSlider')
+    vlmSliderLabel.position(160, 80)
+    vlmSlider.position(20, 80)
+
+    sngSliderLabel = createElement('label', 'Song Control')
+    sngSliderLabel.attribute('for', 'sngSlider')
+    sngSliderLabel.position(160, 100)
+    sngSlider.position(20, 100)
+
+    songButton = new Button((width / 2, height / 2))
+
+    hasLoaded = true;
 }
 
-function draw() {
-
+function mouseClicked() {
+    if (songButton.clicked()) {
+        playSong()
+    }
 }
 
 function playSong() {
-    if (!requiem[0].isPlaying()) {
-        requiem[0].play()
-        document.getElementById('controlBtn').innerText = 'Pause'
+    if (!song.isPlaying()) {
+        song.play()
+        playBtn.html('Pause')
         console.log("Play")
     } else {
-        requiem[0].pause()
-        document.getElementById('controlBtn').innerText = 'Play'
+        song.pause()
+        playBtn.html('Play')
         console.log("Pause")
+    }
+}
+
+function jumpSlide() {
+    song.jump(sngSlider.value())
+}
+
+function windowResized() {
+    resizeCanvas(windowWidth, windowHeight, WEBGL);
+}
+
+function draw() {
+    song.setVolume(vlmSlider.value())
+
+    vol = amp.getLevel()
+    mag = map(vol, 0, 1, 20, 3000)
+
+    // for (var i = 0; i < 255; i++) {
+    //     var bgColor = color(0, 0, 0, i)
+    //     ellipse()
+    // }
+    background(0,0,0,200)
+
+    fill(200,200,200)
+    strokeWeight(1)
+    triangle(
+        -mag, mag,
+        0, -mag,
+        mag, mag
+    )
+
+    // Show Play/Pause Button if the song has been loaded
+    if (hasLoaded) {
+        songButton.display()    
     }
 }
