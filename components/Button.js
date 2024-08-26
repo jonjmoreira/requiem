@@ -1,18 +1,16 @@
 class Button {
-    color
-
     constructor(){
         this.buttonType = 'play'
         this.counter = random(0, 255)
         this.switcher = 1
-        this.buttonHeight = -height / 2.5
-        this.x = width / 2
-        this.y = (height / 2) - (height / 2.5)
+        this.desiredHeight = height * 0.1
+        // this.x = width / 2
+        // this.y = (-height / 2) + this.desiredHeight
         this.size = 15;
     }
 
     display() {
-        this.updateCoordinates
+        this.updateCoordinates()
 
         // Construct the color
         this.counter += this.switcher
@@ -28,7 +26,7 @@ class Button {
         strokeWeight(0)
 
         // Translate the position to draw the shape
-        translate(0, this.buttonHeight)
+        translate(0, this.y)
 
         // Verify buttonType to decide which button to draw
         switch(this.buttonType) {
@@ -55,10 +53,12 @@ class Button {
         }
 
         // Translate back after drawing so it won't mess up the others
-        translate(0, -this.buttonHeight)
+        translate(0, -this.y)
     }
 
     clicked() {
+        console.log(this.x, mouseX, this.y, mouseY)
+        console.log(dist(mouseX, mouseY, this.x, this.y))
         // Check if the click coordinates matches the button's coordinates
         if (dist(mouseX, mouseY, this.x, this.y) < this.size * 1.5) {
             this.update()
@@ -86,7 +86,7 @@ class Button {
 
     updateCoordinates() {
         this.x = width / 2
-        this.y = (height / 2) - (height / 2.5)
-        console.log(x, y)
+        this.y = (-height / 2) + this.desiredHeight
+        console.log(this.x, this.y)
     }
 }

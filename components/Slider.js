@@ -1,16 +1,10 @@
-class Slider extends p5.Element {
+class Slider {
     constructor(pos, duration) {
-        super();
-        this.pos = pos;
         this.duration = duration;
     }
 
-    show() {
-        line(this.pos.x - 50, this.pos.y,
-            this.pos.x + 50, this.pos.y
-        )
-
-        point(this.pos.x, this.pos.y)
+    display() {
+        
     }
 
 }

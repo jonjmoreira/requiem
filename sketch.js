@@ -4,6 +4,7 @@ var playBtn;
 var vlmSlider, sngSlider;
 var vlmSliderLabel, sngSliderLabel;
 var songButton;
+var graal;
 var hasLoaded = false;
 
 function setup() {
@@ -37,7 +38,8 @@ function contentLoaded() {
     sngSliderLabel.position(160, 100)
     sngSlider.position(20, 100)
 
-    songButton = new Button((width / 2, height / 2))
+    songButton = new Button()
+    graal = new Graal()
 
     hasLoaded = true;
 }
@@ -71,25 +73,11 @@ function windowResized() {
 function draw() {
     song.setVolume(vlmSlider.value())
 
-    vol = amp.getLevel()
-    mag = map(vol, 0, 1, 20, 3000)
-
-    // for (var i = 0; i < 255; i++) {
-    //     var bgColor = color(0, 0, 0, i)
-    //     ellipse()
-    // }
     background(0,0,0,200)
-
-    fill(200,200,200)
-    strokeWeight(1)
-    triangle(
-        -mag, mag,
-        0, -mag,
-        mag, mag
-    )
 
     // Show Play/Pause Button if the song has been loaded
     if (hasLoaded) {
-        songButton.display()    
+        songButton.display()
+        graal.display(amp)
     }
 }
