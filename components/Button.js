@@ -3,9 +3,7 @@ class Button {
         this.buttonType = 'play'
         this.counter = random(0, 255)
         this.switcher = 1
-        this.desiredHeight = height * 0.1
-        // this.x = width / 2
-        // this.y = (-height / 2) + this.desiredHeight
+        this.desiredY = height * 0.1
         this.size = 15;
     }
 
@@ -14,18 +12,20 @@ class Button {
 
         // Construct the color
         this.counter += this.switcher
-        if (this.counter > 255 || this.counter < 0) {
+        if (this.counter > 100 || this.counter < 0) {
             this.switcher *= (-1)
         }
-        var r = map(this.counter, 0, 255, 100, 120)
-        var g = map(this.counter, 0, 255, 50, 150)
-        var b = map(this.counter, 0, 255, 150, 200)
-        var alpha = map(this.counter, 0, 255, 150, 255)
-        this.color = color(r, g, b, alpha)
+
+        var h = map(this.counter, 0, 100, 20, 100)
+        var s = map(this.counter, 0, 100, 80, 100)
+        var l = map(this.counter, 0, 100, 40, 60)
+        var alpha = map(this.counter, 0, 100, 80, 100)
+        this.color = color(h, s, l, alpha)
         fill(this.color)
-        strokeWeight(0)
+        noStroke()
 
         // Translate the position to draw the shape
+        push()
         translate(0, this.y)
 
         // Verify buttonType to decide which button to draw
@@ -52,15 +52,13 @@ class Button {
                 break
         }
 
-        // Translate back after drawing so it won't mess up the others
-        translate(0, -this.y)
+        // Undo transformations
+        pop()
     }
 
     clicked() {
-        console.log(this.x, mouseX, this.y, mouseY)
-        console.log(dist(mouseX, mouseY, this.x, this.y))
         // Check if the click coordinates matches the button's coordinates
-        if (dist(mouseX, mouseY, this.x, this.y) < this.size * 1.5) {
+        if (dist(mouseX, mouseY, this.x, this.desiredY) < this.size * 1.5) {
             this.update()
 
             // The return is necessary in order to show the button properly
@@ -86,7 +84,6 @@ class Button {
 
     updateCoordinates() {
         this.x = width / 2
-        this.y = (-height / 2) + this.desiredHeight
-        console.log(this.x, this.y)
+        this.y = (-height / 2) + this.desiredY
     }
 }

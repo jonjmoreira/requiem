@@ -1,9 +1,0 @@
-class Platform {
-    constructor() {
-
-    }
-
-    display() {
-        
-    }
-}

@@ -7,16 +7,17 @@ class Graal {
         var vol = amp.getLevel()
         var mag = map(vol, 0, 1, 20, 3000)
 
-        fill(200,200,200)
+        fill(50, 100, 50, 100)
         strokeWeight(1)
+
+        push()
         rotateX(-45)
-        rotateY(frameCount * 0.045)
+        rotateY(frameCount)
         triangle(
             -mag, mag,
             0, -mag,
             mag, mag
         )
-        rotateX(45)
-        rotateY(-frameCount * 0.045)
+        pop()
     }
 }

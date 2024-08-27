@@ -4,14 +4,19 @@ var playBtn;
 var vlmSlider, sngSlider;
 var vlmSliderLabel, sngSliderLabel;
 var songButton;
-var graal;
+var graal, altar;
 var hasLoaded = false;
 
 function setup() {
-    createCanvas(windowWidth, windowHeight, WEBGL);
+    createCanvas(windowWidth, windowHeight, WEBGL)
+    colorMode(HSL)
+    angleMode(DEGREES)
+    // debugMode()
 
     song = loadSound('static/01-Introitus.mp3', contentLoaded)
     amp = new p5.Amplitude();
+
+    altar = new Altar()
 
     vlmSlider = createSlider(0, 1, 0.5, 0.01)
     vlmSlider.id('vlmSlider')
@@ -39,6 +44,7 @@ function contentLoaded() {
     sngSlider.position(20, 100)
 
     songButton = new Button()
+    
     graal = new Graal()
 
     hasLoaded = true;
@@ -74,7 +80,8 @@ function draw() {
     song.setVolume(vlmSlider.value())
 
     background(0,0,0,200)
-
+    
+    altar.display()
     // Show Play/Pause Button if the song has been loaded
     if (hasLoaded) {
         songButton.display()
