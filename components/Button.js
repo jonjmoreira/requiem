@@ -1,8 +1,9 @@
 class Button {
     constructor(){
         this.buttonType = 'play'
-        this.counter = random(0, 255)
-        this.switcher = 1
+        this.maxCount = 100
+        this.counter = random(0, this.maxCount)
+        this.switcher = 0.1
         this.desiredY = height * 0.1
         this.size = 15;
     }
@@ -16,11 +17,11 @@ class Button {
             this.switcher *= (-1)
         }
 
-        var h = map(this.counter, 0, 100, 20, 100)
-        var s = map(this.counter, 0, 100, 80, 100)
-        var l = map(this.counter, 0, 100, 40, 60)
-        var alpha = map(this.counter, 0, 100, 80, 100)
-        this.color = color(h, s, l, alpha)
+        var h = map(this.counter, 0, this.maxCount, 20, 340 )
+        var s = map(this.counter, 0, this.maxCount, 70, 80)
+        var b = map(this.counter, 0, this.maxCount, 85, 100)
+        var alpha = map(this.counter, 0, this.maxCount, 80, 90)
+        this.color = color(h, s, b, alpha)
         fill(this.color)
         noStroke()
 

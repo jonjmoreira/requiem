@@ -9,7 +9,7 @@ var hasLoaded = false;
 
 function setup() {
     createCanvas(windowWidth, windowHeight, WEBGL)
-    colorMode(HSL)
+    colorMode(HSB, 360, 100, 100)
     angleMode(DEGREES)
     // debugMode()
 
