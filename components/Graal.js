@@ -17,7 +17,7 @@ class Graal {
         beginShape()
             noFill()
             if (this.ampHits.length > width) {
-                this.ampHits.splice(0, 1)
+                this.ampHits.splice(0, dist(0, this.ampHits.length, 0, width))
             }
             for (var i = 0; i < this.ampHits.length; i++) {
                 vertex((-width / 2) + i, this.ampHits[i])
